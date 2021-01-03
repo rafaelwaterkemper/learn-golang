@@ -1,0 +1,9 @@
+Data/Hora=03/01/2021 00:49:24;Site=https://www.alura.com.br;Status=true
+Data/Hora=03/01/2021 00:49:25;Site=https://www.google.com;Status=true
+Data/Hora=03/01/2021 00:49:25;Site=https://www.terra.com.br;Status=true
+Data/Hora=03/01/2021 00:49:36;Site=https://www.alura.com.br;Status=true
+Data/Hora=03/01/2021 00:49:36;Site=https://www.google.com;Status=true
+Data/Hora=03/01/2021 00:49:36;Site=https://www.terra.com.br;Status=true
+Data/Hora=03/01/2021 00:50:54;Site=https://www.alura.com.br;Status=true
+Data/Hora=03/01/2021 00:50:54;Site=https://www.google.com;Status=true
+Data/Hora=03/01/2021 00:50:55;Site=https://www.terra.com.br;Status=true
