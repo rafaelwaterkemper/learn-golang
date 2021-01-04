@@ -77,7 +77,12 @@ func executaMontioramento() {
 			resp, err := http.Get(site)
 
 			if err != nil {
-				fmt.Println("Site com erro", site, ", error ", err)
+				fmt.Println("Erro ao consultar site", site, ", error ", err)
+				registraLogs(site, false)
+				continue
+			}
+
+			if resp.StatusCode != 200 {
 				registraLogs(site, false)
 			} else {
 				fmt.Println("Site", site, " retornou o status code ", resp.StatusCode)
@@ -117,6 +122,8 @@ func registraLogs(site string, status bool) {
 	if err != nil {
 		fmt.Println("Ocorreu um erro", err)
 	}
+
+	pointer := &site
 
 	file.WriteString("Data/Hora=" + time.Now().Format("02/01/2006 15:04:05") + ";Site=" + site + ";Status=" + strconv.FormatBool(status) + "\n")
 }
