@@ -1,39 +1,29 @@
 package main
 
 import (
-	"fmt"
-	"html"
-	"log"
 	"net/http"
-	"time"
+	"text/template"
 )
 
-// func main() {
-// 	http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
-// 		fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
-// 	})
+var temp = template.Must(template.ParseGlob("templates/*.html"))
 
-// 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-// 		w.Write([]byte("Hello from base path"))
-// 	})
-
-// 	log.Fatal("Serving", http.ListenAndServe(":8080", nil))
-// }
+type Produto struct {
+	Nome       string
+	Descricao  string
+	Preco      float64
+	Quantidade int
+}
 
 func main() {
-	s := &http.Server{
-		Addr:           ":8080",
-		Handler:        &GlobalHandler{},
-		ReadTimeout:    10 * time.Second,
-		WriteTimeout:   10 * time.Second,
-		MaxHeaderBytes: 1 << 20,
+	http.HandleFunc("/", index)
+	http.ListenAndServe(":8080", nil)
+}
+
+func index(w http.ResponseWriter, r *http.Request) {
+	produtos := []Produto{
+		{"Tenis", "Adidas", 199.99, 2},
+		{"Calça", "Nike", 99.99, 10},
+		{"Pc Gamer", "Bom demais", 2599.99, 1},
 	}
-	log.Fatal(s.ListenAndServe())
-}
-
-type GlobalHandler struct {
-}
-
-func (*GlobalHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, %q from httpServer configured", html.EscapeString(r.URL.Path))
+	temp.ExecuteTemplate(w, "Index", produtos)
 }
