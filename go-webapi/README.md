@@ -1,6 +1,6 @@
 ```
 docker run \
-    --name postgres \
+    --name pggolang \
     -e POSTGRES_USER=golang \
     -e POSTGRES_PASSWORD=golang \
     -e POSTGRES_DB=godb \
