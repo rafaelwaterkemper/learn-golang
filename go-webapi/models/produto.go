@@ -40,6 +40,7 @@ func FindAllProdutos() []Produto {
 			panic(err.Error())
 		}
 
+		produto.Id = id
 		produto.Nome = nome
 		produto.Descricao = descricao
 		produto.Preco = preco

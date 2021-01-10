@@ -27,6 +27,8 @@
                             <th>Descrição</th>
                             <th>Preço</th>
                             <th>Quantidade</th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +38,12 @@
                             <td>{{.Descricao}}</td>
                             <td>{{.Preco}}</td>
                             <td>{{.Quantidade}}</td>
+                            <td>
+                                <button class="btn btn-danger" onclick="remove({{.Id}})">Excluir</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-primary" onclick="edit({{.Id}})">Editar</button>
+                            </td>
                         </tr>
                         {{end}}
                     </tbody>
@@ -45,8 +53,16 @@
         <div class="card-footer">
             <a href="/new" class="btn btn-primary mb-2">Produto</a>
         </div>
-
     </div>
+    <script>
+        function remove(id) {
+            console.log("Removendo produto com Id: ", id)
+        }
+
+        function edit(id) {
+            console.log("Removendo produto com Id: ", id)
+        }
+    </script>
 </body>
 
 </html>
