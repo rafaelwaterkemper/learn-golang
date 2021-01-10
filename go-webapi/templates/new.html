@@ -6,9 +6,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-        crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <title>Alura loja</title>
 </head>
@@ -23,6 +24,9 @@
                 <h1 class="display-5">Novo produto</h1>
                 <p class="lead">Insira os detalhes</p>
             </div>
+        </div>
+        <div id="error-message" style="display: none;">
+            <h2 class="error-message">{{.}}</h2>
         </div>
         <form method="POST" action="insert">
             <div class="row">
@@ -62,7 +66,20 @@
             <a class="btn btn-info" href="/">Voltar</a>
         </form>
     </body>
-
+    <style>
+        .error-message {
+            display: inline;
+            background-color: #F08080;
+            padding: 5px;
+            border-radius: 8px;
+        } 
+    </style>
+    <script>
+        if({{.}}) {
+            element = document.getElementById("error-message")
+            element.style.display = "block"
+        }
+    </script>
 </html>
 </div>
 </body>
