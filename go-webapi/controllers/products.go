@@ -25,12 +25,12 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 }
 
 func Insert(w http.ResponseWriter, r *http.Request) {
-	nome := r.FormValue("nome")
-	descricao := r.FormValue("descricao")
-	preco, _ := strconv.ParseFloat(r.FormValue("preco"), 64)
-	quantidade, _ := strconv.Atoi(r.FormValue("quantidade"))
+	name := r.FormValue("name")
+	description := r.FormValue("description")
+	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+	quantity, _ := strconv.Atoi(r.FormValue("quantity"))
 
-	result, err := models.Save(models.Produto{Nome: nome, Descricao: descricao, Preco: preco, Quantidade: quantidade})
+	result, err := models.Save(models.Product{Name: name, Description: description, Price: price, Quantity: quantity})
 
 	if err != nil {
 		temp.ExecuteTemplate(w, "New", err.Error())
@@ -45,18 +45,18 @@ func Insert(w http.ResponseWriter, r *http.Request) {
 func Delete(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.URL.Query().Get("id"))
 
-	models.RemoveProduct(id)
+	models.Remove(id)
 	http.Redirect(w, r, "/", 301)
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	id, _ := strconv.Atoi(r.FormValue("id"))
-	nome := r.FormValue("nome")
-	descricao := r.FormValue("descricao")
-	preco, _ := strconv.ParseFloat(r.FormValue("preco"), 64)
-	quantidade, _ := strconv.Atoi(r.FormValue("quantidade"))
+	name := r.FormValue("name")
+	description := r.FormValue("description")
+	price, _ := strconv.ParseFloat(r.FormValue("price"), 64)
+	quantity, _ := strconv.Atoi(r.FormValue("quantity"))
 
-	result, _ := models.Update(models.Produto{Id: id, Nome: nome, Descricao: descricao, Preco: preco, Quantidade: quantidade})
+	result, _ := models.Update(models.Product{Id: id, Name: name, Description: description, Price: price, Quantity: quantity})
 
 	if result {
 		http.Redirect(w, r, "/", 301)

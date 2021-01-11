@@ -8,8 +8,8 @@
     <body>
         <div class="jumbotron jumbotron-fluid">
             <div class="container">
-                <h1 class="display-5">Novo produto</h1>
-                <p class="lead">Insira os detalhes</p>
+                <h1 class="display-5">New product</h1>
+                <p class="lead">Fill the details</p>
             </div>
         </div>
         <div id="error-message" style="display: none;">
@@ -19,24 +19,24 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <label for="nome">Nome:</label>
-                        <input type="text" name="nome" class="form-control">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" class="form-control">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-8">
                     <div class="form-group">
-                        <label for="descricao">Descrição:</label>
-                        <input type="text" name="descricao" class="form-control">
+                        <label for="description">Description:</label>
+                        <input type="text" name="description" class="form-control">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="preco">Preço:</label>
-                        <input type="number" name="preco" class="form-control" step="0.01">
+                        <label for="price">Price:</label>
+                        <input type="number" name="price" class="form-control" step="0.01">
                     </div>
                 </div>
             </div>
@@ -44,13 +44,13 @@
             <div class="row">
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <label for="quantidade">Quantidade:</label>
-                        <input type="number" name="quantidade" class="form-control">
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" name="quantity" class="form-control">
                     </div>
                 </div>
             </div>
-            <button type="submit" value="salvar" class="btn btn-success">Salvar</button>
-            <a class="btn btn-info" href="/">Voltar</a>
+            <button type="submit" value="save" class="btn btn-success">Save</button>
+            <a class="btn btn-info" href="/">Back</a>
         </form>
     </body>
     <style>
@@ -64,7 +64,7 @@
     <script>
         if({{.}}) {
             element = document.getElementById("error-message")
-            element.style.display = "block"
+            element.style.display = "inline"
         }
     </script>
 </html>

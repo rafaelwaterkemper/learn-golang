@@ -10,9 +10,9 @@ docker run \
 
     create table produtos(
         id serial primary key,
-        nome varchar,
-        descricao varchar,
-        preco decimal,
-        quantidade integer
+        name varchar,
+        description varchar,
+        price decimal,
+        quantity integer
     );
 ```
