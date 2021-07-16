@@ -1,0 +1,49 @@
+{{define "Index"}}
+
+{{template "_head"}}
+
+<body style="background-color: #dcdcdc;">
+
+    <nav class=" navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Active Versions</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Transparencia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Protocolo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="row ">
+            {{range .}}
+            <div class="col-md-4">
+                <div style="background-color: #a7b6c5;" class="p-5 mb-3 rounded">
+                    <h1 style="font-size: 1.5em;">
+                        <span class="">{{.Name}}</span>
+                    </h1>
+                    <h1>
+                        <span class="badge rounded-pill bg-success">{{.Version}}</span>
+                    </h1>
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </main>
+</body>
+
+</html>
+{{end}}
