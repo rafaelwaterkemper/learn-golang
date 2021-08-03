@@ -17,45 +17,46 @@ type Product struct {
 func query() *sql.Rows {
 	db := repository.GetConnection()
 	defer db.Close()
-	products, err := db.Query("select * from products")
+	produtos, err := db.Query("select * from produtos")
 
 	if err != nil {
 		panic(err.Error())
 	}
-	return products
+
+	return produtos
 }
 
 func FindAllProdutos() []Product {
 	product := Product{}
-	products := []Product{}
+	produtos := []Product{}
 	rows := query()
 	for rows.Next() {
-		var name, description string
-		var id, quantity int
-		var price float64
+		var nome, descricao string
+		var id, quantidade int
+		var preco float64
 
-		err := rows.Scan(&id, &name, &description, &price, &quantity)
+		err := rows.Scan(&id, &nome, &descricao, &preco, &quantidade)
 
 		if err != nil {
 			panic(err.Error())
 		}
 
 		product.Id = id
-		product.Name = name
-		product.Description = description
-		product.Price = price
-		product.Quantity = quantity
+		product.Name = nome
+		product.Description = descricao
+		product.Price = preco
+		product.Quantity = quantidade
 
-		products = append(products, product)
+		produtos = append(produtos, product)
 	}
-	return products
+	return produtos
 }
 
 func Save(p Product) (bool, error) {
 	db := repository.GetConnection()
 	defer db.Close()
 
-	result, err := db.Exec("INSERT INTO products (name, description, price, quantity) VALUES($1, $2, $3, $4)",
+	result, err := db.Exec("INSERT INTO produtos (nome, descricao, preco, quantidade) VALUES($1, $2, $3, $4)",
 		p.Name, p.Description, p.Price, p.Quantity)
 
 	if err == nil {
@@ -73,7 +74,7 @@ func Update(p Product) (bool, error) {
 	defer db.Close()
 
 	fmt.Println("Id updated", p.Id)
-	result, err := db.Exec("UPDATE products SET name=$1, description=$2, price=$3, quantity=$4 WHERE id = $5",
+	result, err := db.Exec("UPDATE produtos SET nome=$1, descricao=$2, preco=$3, quantidade=$4 WHERE id = $5",
 		p.Name, p.Description, p.Price, p.Quantity, p.Id)
 
 	if err == nil {
@@ -90,7 +91,7 @@ func Find(id int) Product {
 	db := repository.GetConnection()
 	defer db.Close()
 
-	rows, err := db.Query("select * from products where id = $1", id)
+	rows, err := db.Query("select * from produtos where id = $1", id)
 
 	if err != nil {
 		panic(err.Error())
@@ -98,16 +99,16 @@ func Find(id int) Product {
 
 	produto := Product{}
 	for rows.Next() {
-		var name, description string
-		var id, quantity int
-		var price float64
+		var nome, descricao string
+		var id, quantidade int
+		var preco float64
 
-		rows.Scan(&id, &name, &description, &price, &quantity)
+		rows.Scan(&id, &nome, &descricao, &preco, &quantidade)
 		produto.Id = id
-		produto.Name = name
-		produto.Description = description
-		produto.Price = price
-		produto.Quantity = quantity
+		produto.Name = nome
+		produto.Description = descricao
+		produto.Price = preco
+		produto.Quantity = quantidade
 	}
 	return produto
 }
@@ -115,7 +116,7 @@ func Find(id int) Product {
 func Remove(id int) (bool, error) {
 	db := repository.GetConnection()
 
-	result, err := db.Exec("DELETE FROM products where id = $1", id)
+	result, err := db.Exec("DELETE FROM produtos where id = $1", id)
 
 	row, _ := result.RowsAffected()
 	defer db.Close()
