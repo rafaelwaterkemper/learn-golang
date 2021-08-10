@@ -2,18 +2,22 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Post struct {
-	Title string `bson:"title,omitempty"`
-	Body  string `bson:"body,omitempty"`
+	Id    primitive.ObjectID `bson:"_id,omitempty" json:"id"`
+	Title string             `bson:"title,omitempty" json:"title"`
+	Body  string             `bson:"body,omitempty" json:"body"`
+	Email string             `bson:"email,omitempty" json:"email"`
 }
 
 func main() {
@@ -77,5 +81,26 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(posts)
+
+	filter := bson.D{{"_id", posts[0].Id}}
+	update := bson.D{{"$set", bson.D{{"email", "newemail@example.com"}}}}
+	var updatedDocument Post
+	errUpd := collection.FindOneAndUpdate(
+		context.TODO(),
+		filter,
+		update,
+	).Decode(&updatedDocument)
+
+	if errUpd != nil {
+		// ErrNoDocuments means that the filter did not match any documents in
+		// the collection.
+		fmt.Println("No Docs to update")
+		if errUpd == mongo.ErrNoDocuments {
+			return
+		}
+		log.Fatal(errUpd)
+	}
+	formated, _ := json.Marshal(updatedDocument)
+	fmt.Println("updated document", string(formated))
 
 }
