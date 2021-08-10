@@ -1,0 +1,15 @@
+docker exec -it mongodbintegration_mongo_1 /bin/bash
+mongo -u root -p rafael admin
+use mydb
+db.createUser(
+   {
+     user: "appAdmin",
+     pwd: passwordPrompt(),   // Or  "<cleartext password>"
+     roles:
+       [
+         { role: "readWrite", db: "config" },
+         { role: "clusterAdmin", db: "admin"},
+         "readWrite"
+       ]
+   }
+)
