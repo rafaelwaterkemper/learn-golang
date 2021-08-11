@@ -52,6 +52,34 @@ func main() {
 	*/
 	collection := client.Database("mydb").Collection("posts")
 
+	insertMany(ctx, collection)
+	posts := findAll(ctx, collection)
+
+	updateOne(collection, posts[0].Id)
+	deleteOne(collection, bson.D{{"_id", posts[0].Id}})
+	deleteAll(collection)
+}
+
+func findAll(ctx context.Context, collection *mongo.Collection) []Post {
+	/*
+		Iterate a cursor
+	*/
+	cur, currErr := collection.Find(ctx, bson.D{})
+
+	if currErr != nil {
+		panic(currErr)
+	}
+	defer cur.Close(ctx)
+
+	var posts []Post
+	if err := cur.All(ctx, &posts); err != nil {
+		panic(err)
+	}
+	fmt.Println(posts)
+	return posts
+}
+
+func insertMany(ctx context.Context, collection *mongo.Collection) {
 	/*
 		Insert documents
 	*/
@@ -66,23 +94,10 @@ func main() {
 		log.Fatal(insertErr)
 	}
 	fmt.Println(res)
-	/*
-		Iterate a cursor
-	*/
-	cur, currErr := collection.Find(ctx, bson.D{})
+}
 
-	if currErr != nil {
-		panic(currErr)
-	}
-	defer cur.Close(ctx)
-
-	var posts []Post
-	if err = cur.All(ctx, &posts); err != nil {
-		panic(err)
-	}
-	fmt.Println(posts)
-
-	filter := bson.D{{"_id", posts[0].Id}}
+func updateOne(collection *mongo.Collection, idToUpdate primitive.ObjectID) {
+	filter := bson.D{{"_id", idToUpdate}}
 	update := bson.D{{"$set", bson.D{{"email", "newemail@example.com"}}}}
 	var updatedDocument Post
 	errUpd := collection.FindOneAndUpdate(
@@ -102,5 +117,33 @@ func main() {
 	}
 	formated, _ := json.Marshal(updatedDocument)
 	fmt.Println("updated document", string(formated))
+}
 
+func deleteOne(coll *mongo.Collection, filter interface{}) {
+	// Delete at most one document in which the "name" field is "Bob" or "bob".
+	// Specify the SetCollation option to provide a collation that will ignore
+	// case for string comparisons.
+	opts := options.Delete().SetCollation(&options.Collation{
+		Locale:    "en_US",
+		Strength:  1,
+		CaseLevel: false,
+	})
+	res, err := coll.DeleteOne(context.TODO(), filter, opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("deleted %v documents\n", res.DeletedCount)
+}
+
+func deleteAll(coll *mongo.Collection) {
+	opts := options.Delete().SetCollation(&options.Collation{
+		Locale:    "en_US",
+		Strength:  1,
+		CaseLevel: false,
+	})
+	res, err := coll.DeleteMany(context.TODO(), bson.D{}, opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("deleted %v documents\n", res.DeletedCount)
 }
